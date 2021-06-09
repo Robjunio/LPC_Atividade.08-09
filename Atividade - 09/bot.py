@@ -8,7 +8,6 @@ class bot(object):
     bot_body = []
     bot_turns = {}
 
-    
     def __init__(self, color, pos):
         self.color = color
         self.head = cube(pos)
@@ -17,7 +16,7 @@ class bot(object):
         self.diry = 1
 
 
-    def move(apple_pos):
+    def move(self, apple_pos):
         if self.head.pos[0] != apple_pos[0]:
             if self.head.pos[0] < apple_pos[0]:
                 self.dirnx = -1
