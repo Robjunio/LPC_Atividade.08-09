@@ -5,7 +5,7 @@ class Subject:
         self.name = name
         self.code = code
         self.professors = []
-        
+
     def lancamento_notas(self,professors):
         for cont in professors:
             print(cont.name, "lançando notas de", self.name, "({})".format(self.code))
