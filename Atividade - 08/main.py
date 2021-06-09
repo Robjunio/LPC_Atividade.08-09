@@ -3,8 +3,8 @@ from Professor import Professor
 from Subject import Subject
 from University import University
 
-if __name__ == '__main__':
 
+def instantiate_objects():
     subjects = []
     professors = []
 
@@ -23,6 +23,7 @@ if __name__ == '__main__':
             )
         )
         professors[i].subjects.append(subjects[i])
+        subjects[i].professors.append(professors[i])
 
     university = University(
         name="UEA/EST",
@@ -31,10 +32,28 @@ if __name__ == '__main__':
             professor=professors[0]
         )
     )
+    university.add_departament(
+        Department(
+            name="Ciências Humanas",
+            professor=professors[1]
+        )
+    )
+    university.add_departament(
+        Department(
+            name="Ciências Naturais",
+            professor=professors[2]
+        )
+    )
 
-    print(university.name)
+    return university
+
+
+if __name__ == '__main__':
+    university = instantiate_objects()
+
+    print(f"Universidade: {university.name}")
     for department in university.departments:
-        print(department.name)
+        print('\n' + department.name)
         for professor in department.professors:
             print(professor.name)
             for subject in professor.subjects:
