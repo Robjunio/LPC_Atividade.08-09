@@ -7,7 +7,8 @@ from University import University
 def instantiate_objects():
     subjects = []
     professors = []
-
+    
+    
     for i in range(0, 5):
         subjects.append(
             Subject(
@@ -25,25 +26,19 @@ def instantiate_objects():
         professors[i].subjects.append(subjects[i])
         subjects[i].professors.append(professors[i])
 
-    university = University(
-        name="UEA/EST",
-        department=Department(
-            name="Tecnologia",
-            professor=professors[0]
+    for i in range(0, 5):
+        if i == 0:
+            university = University(name= "UEA/EST",
+                    department= Department(name=
+                            "departament"+str(i),
+                                professor= professors[0])
         )
-    )
-    university.add_departament(
-        Department(
-            name="Ciências Humanas",
-            professor=professors[1]
-        )
-    )
-    university.add_departament(
-        Department(
-            name="Ciências Naturais",
-            professor=professors[2]
-        )
-    )
+        else:
+            university.add_departament(
+                Department(name= "departament"+str(i),
+                            professor= professors[i])
+            )
+    
 
     return university
 
