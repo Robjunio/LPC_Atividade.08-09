@@ -1,6 +1,5 @@
 import pygame
-
-from colors import RED, BLACK
+from utils import *
 
 
 class Cube:
