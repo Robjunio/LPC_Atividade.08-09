@@ -4,36 +4,82 @@ from Snake import *
 pygame.init()
 
 
-class Bot(Snake):
+class Bot(object):
     bot_body = []
     bot_turns = {}
+
 
     def __init__(self, color, pos):
         self.color = color
         self.head = Cube(pos)
-        self.body.append(self.head)
+        self.bot_body.append(self.head)
         self.dirx = 0
         self.diry = 1
 
-    def move(self, apple_pos):
+
+    # Uma função para facilitar a detecção de colisão       
+    def collision(pos0, pos1):
+        return pos0[0] == pos1[0] and pos0[1] == pos1[1]
+
+
+    # A seguinte função tem como objetivo ver se o bot poderá ou não fazer os
+    # movimento de U, D, L e R. Se não poder eles serão colocados em uma lista
+    # a qual será retornada na função de movimento, e lá será verificado se o
+    # movimento que será feito é possivel ou não.
+    def evade(self):
+        self.dont = []
+        a, b, c, d = 0, 0, 0, 0
+        
+        right_collision = (self.head.pos[0] + 1, self.head.pos[1])
+        left_collision = (self.head.pos[0] - 1, self.head.pos[1])
+        up_collision = (self.head.pos[0], self.head.pos[1] - 1)
+        down_collision = (self.head.pos[0], self.head.pos[1] + 1)
+        
+        for i in range(1, len(self.bot_body)):
+            if a == 0:
+                if (collision(right_collision, self.bot_body[i])):
+                    self.dont.append(R)
+                    a += 1
+            if b == 0:
+                if (collision(left_collision, self.bot_body[i])):
+                    self.dont.append(L)
+                    b += 1
+            if c == 0:
+                if (collision(up_collision, self.bot_body[i])):
+                    self.dont.append(U)
+                    c += 1
+            if d == 0:    
+                if (collision(down_collision, self.bot_body[i])):
+                    self.dont.append(D)
+                    d += 1
+        return self.dont
+        
+    
+    def move(self, apple_pos, movement):
+        dont = evade()
         if self.head.pos[0] != apple_pos[0]:
             if self.head.pos[0] < apple_pos[0]:
-                self.dirnx = -1
-                self.dirny = 0
-                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if L not in dont:
+                    self.dirnx = -1
+                    self.dirny = 0
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]   
             else:
-                self.dirnx = 1
-                self.dirny = 0
-                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if R not in dont:
+                    self.dirnx = 1
+                    self.dirny = 0
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                    
         elif self.head.pos[1] != apple_pos[1]:
             if self.head.pos[1] < apple_pos[1]:
-                self.dirnx = 0
-                self.dirny = -1
-                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if U not in dont:
+                    self.dirnx = 0
+                    self.dirny = -1
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
             else:
-                self.dirnx = 0
-                self.dirny = 1
-                self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if D not in dont:
+                    self.dirnx = 0
+                    self.dirny = 1
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
         for i, c in enumerate(self.body):
             p = c.pos[:]
