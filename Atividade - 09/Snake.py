@@ -1,6 +1,6 @@
 import pygame
 from Cube import *
-
+from utils import *
 pygame.init()
 
 
@@ -16,22 +16,22 @@ class Snake:
         self.diry = 1
 
     def move(self, snake_direction):
-        if snake_direction == L:
+        if snake_direction == LEFT:
             self.dirnx = -1
             self.dirny = 0
             self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
-        elif snake_direction == R:
+        elif snake_direction == RIGHT:
             self.dirnx = 1
             self.dirny = 0
             self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
-        elif snake_direction == U:
+        elif snake_direction == UP:
             self.dirnx = 0
             self.dirny = -1
             self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
 
-        elif snake_direction == D:
+        elif snake_direction == DOWN:
             self.dirnx = 0
             self.dirny = 1
             self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
